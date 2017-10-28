@@ -37,10 +37,11 @@ namespace Shop_test
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.js",
                 "~/Scripts/respond.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/angular.js").Include(
+                "~/Scripts/angular.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                 "~/Content/bootstrap.css",
-                 "~/Content/Site.css"));
+            bundles.Add(new StyleBundle("~/Content/bootstrap.css").Include("~/Content/bootstrap.css"));
+            bundles.Add(new StyleBundle("~/Content/Site.css").Include("~/Content/Site.css"));
         }
     }
 }
