@@ -1,4 +1,22 @@
 ﻿<div ng-controller="shopController">
+   
+    <modal-dialog show='modalShown' width='400px' height='60%'>
+        <p class="validateTips">All form fields are required.</p>
+        <form>
+            <fieldset>
+                <label for="name">Name</label>
+                <input type="text" name="name" ng-model="thisShop.Shop_name" class="text ui-widget-content ui-corner-all">
+                <label for="email">Email</label>
+                <input type="text" ng-model="thisShop.Shop_adress" class="text ui-widget-content ui-corner-all">
+                <label for="password">Password</label>
+                <input type="text" ng-model="thisShop.Shop_time" class="text ui-widget-content ui-corner-all">
+
+                <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                <button class="btn" ng-click="EditShop(thisShop)">Create</button>
+            </fieldset>
+        </form>
+    </modal-dialog>
+
     <div class="form-group">
         <label for="Shop_name" class="col-2 col-form-label">Name</label>
         <div class="col-10">
@@ -21,6 +39,7 @@
     <table class="table table-bordered">
         <thead>
             <tr>
+                <th>Actions</th>
                 <th>Name</th>
                 <th>Adress</th>
                 <th>Time</th>
@@ -28,6 +47,11 @@
         </thead>
         <tbody>
             <tr ng-repeat="Shop in lShops">
+                <td>
+                    <a ng-click="Popup(Shop)">Edit</a>
+                    <a ng-click="DeleteShop(Shop.ShopId)">Delete</a>
+                    <a ng-href="/shops/details/{{Shop.ShopId}}">Details</a>
+                </td>
                 <td>{{Shop.Shop_name}}</td>
                 <td>{{Shop.Shop_adress}}</td>
                 <td>{{Shop.Shop_time}}</td>

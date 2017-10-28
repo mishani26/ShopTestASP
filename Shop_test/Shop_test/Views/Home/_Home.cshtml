@@ -1,54 +1,6 @@
 ﻿<!-- ko with: home -->
 
-<div ng-app="myApp">
-    <ng-view>
-    </ng-view>
-</div>
 
-@Scripts.Render("~/Scripts/angular.js")
-<script>
-    var shopTest = angular.module("myApp", ["ngRoute"]);
 
-    shopTest.config(function ($routeProvider, $locationProvider) {
-        $routeProvider
-        .when("/", {
-            redirectTo: "/Shop/Index",
-            controller: "shopController"
-        })
-        .when("/register", {
-            templateUrl: "/Account/Register",
-            controller: "RegisterController"
-        })
-        .when("/login", {
-            templateUrl: "/Account/Login",
-            controller: "LoginController"
-        }).when("/messages", {
-            templateUrl: "/Messages",
-            controller: "MessagesController"
-        });;
-        $locationProvider.html5Mode(true);
-    });
 
-    shopTest.controller("shopController", ($scope, $http) =>{
-        $scope.lShops = [];
-        $http.get('@Url.Action("AllShopsList", "Shops")').
-            then((success) => {
-                $scope.lShops = success.data;
-            },(error) => {
-
-            })
-        $scope.AddShop = (Shop) => {
-            $http.post(
-                '@Url.Action("Create", "Shops")',
-                JSON.stringify(Shop)
-            ).then((success) => {
-                alert("Shop created sccessfully")
-                $scope.lShops.push(angular.copy(success.data));
-                delete $scope.Shop;
-            }, (error) => {
-                alert(error.data)
-            });
-        }
-    })
-</script>
 <!-- /ko -->

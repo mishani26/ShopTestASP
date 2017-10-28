@@ -73,26 +73,16 @@ namespace Shop_test.Controllers
         }
 
         // GET: Shops/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Shops shops = db.Shops.Find(id);
-            if (shops == null)
-            {
-                return HttpNotFound();
-            }
-            return View(shops);
+            return View();
         }
 
         // POST: Shops/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ShopId,Shop_name,Shop_adress,Shop_time")] Shops shops)
+        public JsonResult Edit( Shops shops )
         {
             try
             {
@@ -101,14 +91,14 @@ namespace Shop_test.Controllers
                 {
                     db.Entry(shops).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return Json(db.Shops.ToList(), JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                return View(shops);
+                return null;
             }
-            return View(shops);
+            return null;
         }
 
         // GET: Shops/Delete/5
@@ -128,13 +118,12 @@ namespace Shop_test.Controllers
 
         // POST: Shops/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public JsonResult DeleteConfirmed(int id)
         {
             Shops shops = db.Shops.Find(id);
             db.Shops.Remove(shops);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Json(db.Shops.ToList(), JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

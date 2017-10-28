@@ -39,7 +39,10 @@ namespace Shop_test
                 "~/Scripts/respond.js"));
             bundles.Add(new ScriptBundle("~/Scripts/angular.js").Include(
                 "~/Scripts/angular.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/jquery-ui-1.12.1.js").Include(
+                "~/Scripts/jquery-ui-1.12.1.js"));
 
+            bundles.Add(new StyleBundle("~/Content/themes/base/jquery-ui.css").Include("~/Content/themes/base/jquery-ui.css"));
             bundles.Add(new StyleBundle("~/Content/bootstrap.css").Include("~/Content/bootstrap.css"));
             bundles.Add(new StyleBundle("~/Content/Site.css").Include("~/Content/Site.css"));
         }
