@@ -1,0 +1,59 @@
+﻿<div ng-controller="productsController">
+
+    <modal-dialog show='modalShown' width='400px' height='60%'>
+        <form>
+            <div class="form-group">
+                <label for="Shop_name" class="col-2 col-form-label">Name</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" ng-model="thisProduct.Product_name" name="Product_name" id="Product_name">
+                </div>
+                <label for="Shop_adress" class="col-2 col-form-label">Property</label>
+                <div class="col-10">
+                    <input class="form-control" type="text" ng-model="thisProduct.Product_properties" name="Product_properties" id="Product_properties">
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn" ng-click="EditProduct(thisProduct)">Edit</button>
+            </div>
+            
+        </form>
+    </modal-dialog>
+
+    <div class="form-group">
+        <label for="Shop_name" class="col-2 col-form-label">Name</label>
+        <div class="col-10">
+            <input class="form-control" type="text" ng-model="Product.Product_name" name="Product_name" id="Product_name">
+        </div>
+        <label for="Shop_adress" class="col-2 col-form-label">Property</label>
+        <div class="col-10">
+            <input class="form-control" type="text" ng-model="Product.Product_properties" name="Product_properties" id="Product_properties">
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn" ng-click="AddProduct(Product)">Create</button>
+    </div>
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>Name</th>
+                <th>Property</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="Product in lProducts">
+                <td>
+                    <a ng-click="Popup(Product)">Edit</a>
+                    <a ng-click="DeleteProduct(Product.productId)">Delete</a>
+                </td>
+                <td>{{Product.Product_name}}</td>
+                <td>{{Product.Product_properties}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a ng-href="/">Back to Shops</a>
+</div>
+

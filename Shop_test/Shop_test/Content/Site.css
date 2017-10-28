@@ -2,7 +2,12 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
-
+body #loading-bar .bar{
+    background:linear-gradient(45deg, #EECFBA, #C5DDE8);
+}
+a{
+    cursor:pointer;
+}
 .ng-modal-overlay {
     /* A dark translucent div that covers the whole screen */
     position: absolute;

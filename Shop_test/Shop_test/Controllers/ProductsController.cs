@@ -10,60 +10,64 @@ using Shop_test.Models;
 
 namespace Shop_test.Controllers
 {
-    public class ShopsController : Controller
+    public class ProductsController : Controller
     {
         private shopsDBEntities db = new shopsDBEntities();
 
-        // GET: Shops
+        // GET: Products
         public ActionResult Index()
         {
             return View();
         }
 
-
-        public JsonResult AllShopsList()
+        public JsonResult AllProductsList(int ShopId)
         {
-            var lShops = db.Shops.Select(s=> new { s.ShopId, s.Shop_adress, s.Shop_name, s.Shop_time }).ToList();
-            return Json(lShops, JsonRequestBehavior.AllowGet);
+            var lProducts = db.Products.Select(s => new {
+                s.ShopId,
+                s.productId,
+                s.Product_name,
+                s.Product_properties
+            }).Where(s=>s.ShopId == ShopId).ToList();
+            return Json(lProducts, JsonRequestBehavior.AllowGet);
         }
-
-        // GET: Shops/Details/5
+        // GET: Products/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Shops shops = db.Shops.Find(id);
-            if (shops == null)
+            Products products = db.Products.Find(id);
+            if (products == null)
             {
                 return HttpNotFound();
             }
-            return View(shops);
+            return View(products);
         }
 
-        // GET: Shops/Create
+        // GET: Products/Create
         public ActionResult Create()
         {
+            ViewBag.ShopId = new SelectList(db.Shops, "ShopId", "Shop_name");
             return View();
         }
 
-        // POST: Shops/Create
+        // POST: Products/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public JsonResult Create( Shops shops)
+        public JsonResult Create( Products products)
         {
             try
             {
-
                 if (ModelState.IsValid)
                 {
-                    db.Shops.Add(shops);
+                    products.Shops = db.Shops.Find(products.ShopId);
+                    db.Products.Add(products);
                     db.SaveChanges();
-                    return Json(shops, JsonRequestBehavior.AllowGet);
+                    products.Shops = null;
+                    return Json(products, JsonRequestBehavior.AllowGet);
                 }
-
                 return null;
             }
             catch (Exception ex)
@@ -72,30 +76,42 @@ namespace Shop_test.Controllers
             }
         }
 
-        // GET: Shops/Edit/5
-        public ActionResult Edit()
+        // GET: Products/Edit/5
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Products products = db.Products.Find(id);
+            if (products == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.ShopId = new SelectList(db.Shops, "ShopId", "Shop_name", products.ShopId);
+            return View(products);
         }
 
-        // POST: Shops/Edit/5
+        // POST: Products/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public JsonResult Edit( Shops shops )
+        public JsonResult Edit(Products product)
         {
             try
             {
 
                 if (ModelState.IsValid)
                 {
-                    db.Entry(shops).State = EntityState.Modified;
+                    product.Shops = db.Shops.Find(product.ShopId);
+                    db.Entry(product).State = EntityState.Modified;
                     db.SaveChanges();
-                    var lResult = db.Shops.Select(s => new {
+                    var lResult = db.Products.Select(s=>new {
                         s.ShopId,
-                        s.Shop_adress,
-                        s.Shop_name,
-                        s.Shop_time }).ToList();
+                        s.productId,
+                        s.Product_name,
+                        s.Product_properties})
+                        .Where(s => s.ShopId == product.ShopId).ToList();
                     return Json(lResult, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -106,36 +122,35 @@ namespace Shop_test.Controllers
             return null;
         }
 
-        // GET: Shops/Delete/5
+        // GET: Products/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Shops shops = db.Shops.Find(id);
-            if (shops == null)
+            Products products = db.Products.Find(id);
+            if (products == null)
             {
                 return HttpNotFound();
             }
-            return View(shops);
+            return View(products);
         }
 
-        // POST: Shops/Delete/5
+        // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         public JsonResult DeleteConfirmed(int id)
         {
-            Shops shops = db.Shops.Find(id);
-            db.Shops.Remove(shops);
+            Products product = db.Products.Find(id);
+            db.Products.Remove(product);
             db.SaveChanges();
-
-            var lResult = db.Shops.Select(s => new {
+            var lResult = db.Products.Select(s => new {
                 s.ShopId,
-                s.Shop_adress,
-                s.Shop_name,
-                s.Shop_time
-            }).ToList();
-
+                s.productId,
+                s.Product_name,
+                s.Product_properties
+            })
+                .Where(s => s.ShopId == product.ShopId).ToList();
             return Json(lResult, JsonRequestBehavior.AllowGet);
         }
 

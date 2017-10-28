@@ -10,35 +10,20 @@
     @Styles.Render("~/Content/themes/base/jquery-ui.css")
     @Styles.Render("~/Content/bootstrap.css")
     @Styles.Render("~/Content/Site.css")
+    <link href="~/Content/loading-bar.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body ng-app="myApp">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Имя приложения", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Домашняя страница", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "HelpPage" }, null)</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+                @Html.ActionLink("Shops and products", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
         @RenderSection("SPAViews", required: false)
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year – приложение ASP.NET</p>
-        </footer>
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/Scripts/jquery-ui-1.12.1.js")
@@ -46,103 +31,10 @@
     @RenderSection("Scripts", required: false)
     @Scripts.Render("~/Scripts/angular.js")
     <script src="~/Scripts/angular-route.js"></script>
-    <script>
-
-        var shopTest = angular.module("myApp", ["ngRoute"]);
-
-        shopTest.directive('modalDialog', function () {
-            return {
-                restrict: 'E',
-                scope: {
-                    show: '='
-                },
-                replace: true, // Replace with the template below
-                transclude: true, // we want to insert custom content inside the directive
-                link: function (scope, element, attrs) {
-                    scope.dialogStyle = {};
-                    if (attrs.width)
-                        scope.dialogStyle.width = attrs.width;
-                    if (attrs.height)
-                        scope.dialogStyle.height = attrs.height;
-                    scope.hideModal = function () {
-                        scope.show = false;
-                    };
-                },
-                template: "<div class='ng-modal' ng-show='show'><div class='ng-modal-overlay' ng-click='hideModal()'></div><div class='ng-modal-dialog' ng-style='dialogStyle'><div class='ng-modal-close' ng-click='hideModal()'>X</div><div class='ng-modal-dialog-content' ng-transclude></div></div></div>"
-            };
-        });
-
-        shopTest.config(function ($routeProvider, $locationProvider) {
-            $routeProvider
-            .when("/", {
-                redirectTo: function () {
-                    return "/shops";
-                }
-            })
-            .when("/shops", {
-                templateUrl: "/Shops",
-                controller: "shopController"
-            })
-            .when("/products/:id", {
-                templateUrl: "/Products",
-                controller: "productsController"
-            });
-            $locationProvider.html5Mode(true);
-        }).controller("shopController", function ($scope, $http) {
-            $scope.thisShop = null;
-            $scope.lShops = [];
-            $scope.modalShown = false;
-
-            $http.get('@Url.Action("AllShopsList", "Shops")').
-                then(function (success) {
-                    $scope.lShops = success.data;
-                }, function (error) {
-
-                })
-            $scope.AddShop = function (Shop) {
-                $http.post(
-                    '@Url.Action("Create", "Shops")',
-                    JSON.stringify(Shop)
-                ).then(function (success) {
-                    alert("Shop created sccessfully")
-                    $scope.lShops.push(angular.copy(success.data));
-                    delete $scope.Shop;
-                }, function (error) {
-                    alert(error.data)
-                });
-            }
-
-            $scope.EditShop = function (thisShop) {
-                $http.post(
-                    '@Url.Action("Edit", "Shops")',
-                    JSON.stringify(thisShop)
-                ).then(function (success) {
-                    alert("Shop edit sccessfully")
-                    $scope.lShops = success.data;
-                }, function (error) {
-                    alert(error.data)
-                });
-            }
-
-            $scope.DeleteShop = function (ShopId) {
-                $http.post(
-                    '@Url.Action("Delete", "Shops")',
-                    {
-                        'id': ShopId
-                    }
-                ).then(function (success) {
-                    alert("Shop has bin deleted sccessfully")
-                    $scope.lShops = success.data;
-                }, function (error) {
-                    alert(error.data)
-                });
-            }
-            $scope.Popup = function (Shop) {
-                $scope.thisShop = Shop;
-                $scope.modalShown = !$scope.modalShown;
-                $("#dialog-form").dialog("open");
-            }
-        })
-    </script>
+    <script src="~/Scripts/angular-cookies.js"></script>
+    <script src="~/Scripts/loading-bar.js"></script>
+    @Scripts.Render("~/Scripts/Routes_module.js")
+    @Scripts.Render("~/Scripts/ShopsController.js")
+    @Scripts.Render("~/Scripts/ProductsController.js")
 </body>
 </html>

@@ -41,6 +41,12 @@ namespace Shop_test
                 "~/Scripts/angular.js"));
             bundles.Add(new ScriptBundle("~/Scripts/jquery-ui-1.12.1.js").Include(
                 "~/Scripts/jquery-ui-1.12.1.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/Routes_module.js").Include(
+                "~/Scripts/Routes_module.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/ShopsController.js").Include(
+                "~/Scripts/ShopsController.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/ProductsController.js").Include(
+                "~/Scripts/ProductsController.js"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/jquery-ui.css").Include("~/Content/themes/base/jquery-ui.css"));
             bundles.Add(new StyleBundle("~/Content/bootstrap.css").Include("~/Content/bootstrap.css"));
