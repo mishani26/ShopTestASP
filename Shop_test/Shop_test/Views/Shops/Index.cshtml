@@ -1,0 +1,38 @@
+﻿<div ng-controller="shopController">
+    <div class="form-group">
+        <label for="Shop_name" class="col-2 col-form-label">Name</label>
+        <div class="col-10">
+            <input class="form-control" type="text" ng-model="Shop.Shop_name" name="Shop_name" id="Shop_name">
+        </div>
+        <label for="Shop_adress" class="col-2 col-form-label">Adress</label>
+        <div class="col-10">
+            <input class="form-control" type="text" ng-model="Shop.Shop_adress" name="Shop_adress" id="Shop_adress">
+        </div>
+        <label for="Shop_time" class="col-2 col-form-label">Time</label>
+        <div class="col-10">
+            <input class="form-control" type="text" ng-model="Shop.Shop_time" name="Shop_time" id="Shop_time">
+        </div>
+    </div>
+    <div class="form-group">
+        <button class="btn" ng-click="AddShop(Shop)">Create</button>
+    </div>
+
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Adress</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="Shop in lShops">
+                <td>{{Shop.Shop_name}}</td>
+                <td>{{Shop.Shop_adress}}</td>
+                <td>{{Shop.Shop_time}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

@@ -4,12 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище shopsDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище shopsDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Products">
           <Key>
             <PropertyRef Name="productId" />
           </Key>
-          <Property Name="productId" Type="int" Nullable="false" />
+          <Property Name="productId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ShopId" Type="int" Nullable="false" />
           <Property Name="Product_name" Type="nvarchar" MaxLength="256" />
           <Property Name="Product_properties" Type="nvarchar" MaxLength="256" />
@@ -18,10 +18,10 @@
           <Key>
             <PropertyRef Name="ShopId" />
           </Key>
-          <Property Name="ShopId" Type="int" Nullable="false" />
+          <Property Name="ShopId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Shop_name" Type="nvarchar" MaxLength="256" />
           <Property Name="Shop_adress" Type="nvarchar" MaxLength="256" />
-          <Property Name="Shop_time" Type="nvarchar" MaxLength="64" />
+          <Property Name="Shop_time" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <Association Name="Products_fk0">
           <End Role="Shops" Type="Self.Shops" Multiplicity="1" />
@@ -43,8 +43,7 @@
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="shopsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -52,7 +51,7 @@
           <Key>
             <PropertyRef Name="productId" />
           </Key>
-          <Property Name="productId" Type="Int32" Nullable="false" />
+          <Property Name="productId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ShopId" Type="Int32" Nullable="false" />
           <Property Name="Product_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Product_properties" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
@@ -62,10 +61,10 @@
           <Key>
             <PropertyRef Name="ShopId" />
           </Key>
-          <Property Name="ShopId" Type="Int32" Nullable="false" />
+          <Property Name="ShopId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Shop_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="Shop_adress" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="Shop_time" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Shop_time" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="Self.Products_fk0" FromRole="Shops" ToRole="Products" />
         </EntityType>
         <Association Name="Products_fk0">

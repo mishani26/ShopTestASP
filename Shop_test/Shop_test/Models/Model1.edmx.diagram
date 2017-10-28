@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="901f88f6ba5b4793ae59867bb227e595" Name="Diagram1">
-        <EntityTypeShape EntityType="shopsDBModel.Products" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="shopsDBModel.Products" Width="1.5" PointX="3.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="shopsDBModel.Shops" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="shopsDBModel.Products_fk0" ManuallyRouted="false" />
       </Diagram>

@@ -8,16 +8,10 @@ namespace Shop_test.Controllers
 {
     public class HomeController : Controller
     {
-        shopsDBEntities db = new shopsDBEntities();
         public ActionResult Index()
         {
             return View();
         }
 
-        public JsonResult AllShopsList()
-        {
-            List<Shops> lShops = db.Shops.ToList();
-            return Json(lShops, JsonRequestBehavior.AllowGet);
-        }
     }
 }
