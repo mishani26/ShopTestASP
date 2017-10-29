@@ -125,18 +125,35 @@ namespace Shop_test.Controllers
         [HttpPost, ActionName("Delete")]
         public JsonResult DeleteConfirmed(int id)
         {
-            Shops shops = db.Shops.Find(id);
-            db.Shops.Remove(shops);
-            db.SaveChanges();
+            try
+            {
+                Shops shops = db.Shops.Find(id);
 
-            var lResult = db.Shops.Select(s => new {
-                s.ShopId,
-                s.Shop_adress,
-                s.Shop_name,
-                s.Shop_time
-            }).ToList();
+                List<Products> lProducts = db.Products.Where(s => s.ShopId == id).ToList();
 
-            return Json(lResult, JsonRequestBehavior.AllowGet);
+                foreach (Products Product in lProducts)
+                {
+                    db.Products.Remove(Product);
+                    db.SaveChanges();
+                }
+
+                db.Shops.Remove(shops);
+                db.SaveChanges();
+
+                var lResult = db.Shops.Select(s => new {
+                    s.ShopId,
+                    s.Shop_adress,
+                    s.Shop_name,
+                    s.Shop_time
+                }).ToList();
+
+                return Json(lResult, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+            
         }
 
         protected override void Dispose(bool disposing)
